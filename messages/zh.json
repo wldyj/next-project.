@@ -1,0 +1,13 @@
+{
+  "common": {
+    "title": "HEIC 转换器",
+    "description": "将 HEIC 图片转换为 JPG/PNG 格式",
+    "upload": "上传图片",
+    "convert": "转换",
+    "download": "下载"
+  },
+  "error": {
+    "unsupportedFile": "不支持的文件类型",
+    "conversionFailed": "转换失败"
+  }
+} 

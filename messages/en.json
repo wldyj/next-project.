@@ -1,0 +1,13 @@
+{
+  "common": {
+    "title": "HEIC Converter",
+    "description": "Convert HEIC images to JPG/PNG format",
+    "upload": "Upload Image",
+    "convert": "Convert",
+    "download": "Download"
+  },
+  "error": {
+    "unsupportedFile": "Unsupported file type",
+    "conversionFailed": "Conversion failed"
+  }
+} 
