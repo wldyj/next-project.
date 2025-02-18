@@ -17,15 +17,16 @@ export const metadata: Metadata = {
   description: "Convert HEIC images to JPG/PNG format",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const resolvedParams = await params;
   return (
-    <html lang={params.locale}>
+    <html lang={resolvedParams.locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>

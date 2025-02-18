@@ -14,20 +14,21 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
   // 等待解析 params
   const resolvedParams = await params;
+  const locale = resolvedParams.locale as Locale;
   
   // 验证请求的语言是否支持
-  if (!locales.includes(resolvedParams.locale as Locale)) {
+  if (!locales.includes(locale)) {
     notFound();
   }
 
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider locale={resolvedParams.locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       {children}
     </NextIntlClientProvider>
   );
