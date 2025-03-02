@@ -1,5 +1,5 @@
 {
-  "name": "heic-to",
+  "name": "next_proj",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "heic-to": "file:",
+    "next_proj": "file:",
     "js-cookie": "^3.0.5",
     "next": "15.1.7",
     "next-intl": "^3.5.4",
