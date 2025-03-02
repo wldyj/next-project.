@@ -1,6 +1,6 @@
 // 中文翻译主文件
-import { common } from './common';
-import { error } from './error';
+import common from './common.json';
+import error from './error.json';
 
 const zhMessages = {
   common,
