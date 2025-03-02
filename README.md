@@ -97,6 +97,16 @@ src/
 │
 ├── i18n.ts                  # 国际化配置
 └── middleware.ts            # Next.js 中间件
+
+messages/                    # 国际化翻译文件
+├── en/                      # 英文翻译
+│   ├── common.json          # 通用翻译
+│   ├── error.json           # 错误信息翻译
+│   └── index.js             # 英文翻译导出文件
+└── zh/                      # 中文翻译
+    ├── common.json          # 通用翻译
+    ├── error.json           # 错误信息翻译
+    └── index.js             # 中文翻译导出文件
 ```
 
 ### 目录说明及最佳实践
@@ -169,6 +179,94 @@ src/
   - 用于路由保护、重定向和请求处理
   - 保持轻量，避免复杂逻辑
   - 性能敏感代码应谨慎放置
+
+#### `messages/` 目录
+- **用途**：存放多语言翻译文件
+- **最佳实践**：
+  - 按语言代码（如en、zh）组织子目录
+  - 按功能模块（如common、error）拆分翻译文件
+  - 使用JSON格式存储翻译键值对
+  - 在index.js中聚合并导出所有翻译
+  - 保持翻译键的一致性和层次结构
+  - 避免在翻译中包含HTML或复杂格式，使用参数替代
+
+## 国际化实现
+
+本项目使用 [next-intl](https://next-intl-docs.vercel.app/) 实现国际化，主要特点：
+
+### 目录结构
+```
+messages/                # 翻译文件根目录
+├── en/                  # 英文翻译
+│   ├── common.json      # 通用文本（标题、按钮等）
+│   ├── error.json       # 错误信息
+│   └── index.js         # 导出所有英文翻译
+└── zh/                  # 中文翻译
+    ├── common.json      # 通用文本
+    ├── error.json       # 错误信息
+    └── index.js         # 导出所有中文翻译
+```
+
+### 关键文件
+- **src/i18n.ts**: 国际化配置，负责加载正确的语言包
+- **src/middleware.ts**: 处理语言检测和路由
+- **src/navigation.ts**: 定义支持的语言列表
+- **src/app/[locale]/layout.tsx**: 国际化布局组件，提供翻译上下文
+
+### 使用方法
+
+1. **在组件中使用翻译**
+```tsx
+'use client';
+import { useTranslations } from 'next-intl';
+
+export default function MyComponent() {
+  const t = useTranslations('common');
+  
+  return (
+    <div>
+      <h1>{t('title')}</h1>
+      <p>{t('description')}</p>
+      <button>{t('upload')}</button>
+    </div>
+  );
+}
+```
+
+2. **切换语言**
+```tsx
+'use client';
+import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+
+export default function LanguageSwitcher() {
+  const locale = useLocale();
+  const router = useRouter();
+  
+  const switchLanguage = (newLocale) => {
+    Cookies.set('NEXT_LOCALE', newLocale, { path: '/' });
+    router.refresh();
+  };
+  
+  return (
+    <div>
+      <button onClick={() => switchLanguage('zh')}>中文</button>
+      <button onClick={() => switchLanguage('en')}>English</button>
+    </div>
+  );
+}
+```
+
+3. **添加新语言**
+   - 在 `messages/` 下创建新的语言目录（如 `ja/`）
+   - 复制现有语言的JSON文件并翻译内容
+   - 创建对应的 `index.js` 导出文件
+   - 在 `src/navigation.ts` 中添加新语言代码
+
+4. **添加新翻译模块**
+   - 在各语言目录下创建新的JSON文件（如 `dashboard.json`）
+   - 在各语言的 `index.js` 中导入并导出新模块
 
 ## 自定义
 
