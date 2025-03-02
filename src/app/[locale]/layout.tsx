@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/navigation';
 import { getMessages } from 'next-intl/server';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 // 验证 locale 是否有效
 export function generateStaticParams() {
@@ -29,7 +30,17 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <div className="flex flex-col min-h-screen">
+        <header className="p-4 bg-gray-100 dark:bg-gray-800">
+          <div className="container mx-auto flex justify-between items-center">
+            <h1 className="text-xl font-bold">HEIC 转换器</h1>
+            <LanguageSwitcher />
+          </div>
+        </header>
+        <main className="flex-grow">
+          {children}
+        </main>
+      </div>
     </NextIntlClientProvider>
   );
 }
